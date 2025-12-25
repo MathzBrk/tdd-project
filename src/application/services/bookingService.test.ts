@@ -182,4 +182,16 @@ describe("Booking Service", () => {
 		expect(spyFindById).toHaveBeenCalledTimes(2);
 		spyFindById.mockRestore();
 	});
+
+	it("should throw an error when trying to cancel a non-existing booking", async () => {
+		const spyFindById = jest.spyOn(fakeBookingRepository, "findById");
+
+		await expect(
+			bookingService.cancelBooking("non-existing-id"),
+		).rejects.toThrow("Booking not found");
+
+		expect(spyFindById).toHaveBeenCalledWith("non-existing-id");
+		expect(spyFindById).toHaveBeenCalledTimes(1);
+		spyFindById.mockRestore();
+	});
 });
