@@ -46,5 +46,61 @@ describe("PropertyMapper", () => {
 				"Invalid base price for property",
 			);
 		});
+
+		it("should throw an error when base price is negative", () => {
+			const propertyEntity: PropertyEntity = {
+				basePrice: -100,
+				description: "A nice place",
+				id: "prop-123",
+				maxGuests: 4,
+				title: "Cozy Apartment",
+				bookings: [],
+			};
+			expect(() => propertyToDomain(propertyEntity)).toThrow(
+				"Invalid base price for property",
+			);
+		});
+
+		it("should throw an error when title is empty", () => {
+			const propertyEntity: PropertyEntity = {
+				basePrice: 100,
+				description: "A nice place",
+				id: "prop-123",
+				maxGuests: 4,
+				title: "",
+				bookings: [],
+			};
+			expect(() => propertyToDomain(propertyEntity)).toThrow(
+				"Title cannot be empty",
+			);
+		});
+
+		it("should throw an error when max guests is zero", () => {
+			const propertyEntity: PropertyEntity = {
+				basePrice: 100,
+				description: "A nice place",
+				id: "prop-123",
+				maxGuests: 0,
+				title: "Cozy Apartment",
+				bookings: [],
+			};
+			expect(() => propertyToDomain(propertyEntity)).toThrow(
+				"Max guests must be greater than zero",
+			);
+		});
+
+		it("should throw an error when max guests is negative", () => {
+			const propertyEntity: PropertyEntity = {
+				basePrice: 100,
+				description: "A nice place",
+				id: "prop-123",
+				maxGuests: -5,
+				title: "Cozy Apartment",
+				bookings: [],
+			};
+			expect(() => propertyToDomain(propertyEntity)).toThrow(
+				"Max guests must be greater than zero",
+			);
+		});
 	});
 });

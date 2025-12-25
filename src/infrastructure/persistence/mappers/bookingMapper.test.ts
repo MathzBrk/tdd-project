@@ -85,6 +85,36 @@ describe("BookingMapper", () => {
 			expect(booking.getUser().getName()).toBe(bookingPersistence.guest.name);
 		});
 
+		it("should throw validation error when guest count is zero", () => {
+			const bookingPersistence = createBookingPersistenceObject({
+				guestCount: 0,
+			});
+
+			expect(() => bookingToDomain(bookingPersistence)).toThrow(
+				"Guest count must be greater than zero",
+			);
+		});
+
+		it("should throw validation error when guest count is negative", () => {
+			const bookingPersistence = createBookingPersistenceObject({
+				guestCount: -1,
+			});
+
+			expect(() => bookingToDomain(bookingPersistence)).toThrow(
+				"Guest count must be greater than zero",
+			);
+		});
+
+		it("should throw validation error when guest count exceeds property max guests", () => {
+			const bookingPersistence = createBookingPersistenceObject({
+				guestCount: 100,
+			});
+
+			expect(() => bookingToDomain(bookingPersistence)).toThrow(
+				"Guest count exceeds maximum allowed",
+			);
+		});
+
 		it("should use provided property instead of mapping from entity", () => {
 			const bookingPersistence = createBookingPersistenceObject();
 			const customProperty = createProperty({
