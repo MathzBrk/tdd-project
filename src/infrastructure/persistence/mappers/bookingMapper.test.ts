@@ -2,7 +2,7 @@ import {
 	createBooking,
 	createBookingPersistenceObject,
 } from "../../../utils/booking";
-import { createProperty } from "../../../utils/property";
+import { createPropertyForTest } from "../../../utils/property";
 import { bookingToDomain, bookingToPersistence } from "./bookingMapper";
 
 describe("BookingMapper", () => {
@@ -117,7 +117,7 @@ describe("BookingMapper", () => {
 
 		it("should use provided property instead of mapping from entity", () => {
 			const bookingPersistence = createBookingPersistenceObject();
-			const customProperty = createProperty({
+			const customProperty = createPropertyForTest({
 				id: "custom-property-id",
 				title: "Custom Property",
 			});

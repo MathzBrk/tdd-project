@@ -7,7 +7,7 @@ export class Property {
 		private readonly title: string,
 		private readonly description: string,
 		private readonly maxGuests: number,
-		private readonly basePrice: number,
+		private readonly basePricePerNight: number,
 		private readonly bookings: Booking[] = [],
 	) {
 		if (!title) {
@@ -16,7 +16,7 @@ export class Property {
 		if (maxGuests <= 0) {
 			throw new Error("Max guests must be greater than zero");
 		}
-		if (Number.isNaN(basePrice) || basePrice < 0) {
+		if (Number.isNaN(basePricePerNight) || basePricePerNight <= 0) {
 			throw new Error("Invalid base price for property");
 		}
 	}
@@ -38,7 +38,7 @@ export class Property {
 	}
 
 	getBasePricePerNight(): number {
-		return this.basePrice;
+		return this.basePricePerNight;
 	}
 
 	validateGuestCount(guestCount: number): void {
@@ -50,7 +50,7 @@ export class Property {
 	}
 
 	calculateTotalPrice(dateRange: DateRange): number {
-		const totalPrice = dateRange.getTotalNights() * this.basePrice;
+		const totalPrice = dateRange.getTotalNights() * this.basePricePerNight;
 
 		if (dateRange.getTotalNights() >= 7) {
 			return totalPrice * 0.9; // Apply 10% discount

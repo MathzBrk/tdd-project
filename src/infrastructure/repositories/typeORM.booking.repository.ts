@@ -1,7 +1,7 @@
-import { Repository } from "typeorm";
-import { Booking } from "../../domain/entities/booking";
-import { BookingRepository } from "../../domain/repositories/bookingRepository";
-import { BookingEntity } from "../persistence/entities/bookingEntity";
+import type { Repository } from "typeorm";
+import type { Booking } from "../../domain/entities/booking";
+import type { BookingRepository } from "../../domain/repositories/bookingRepository";
+import type { BookingEntity } from "../persistence/entities/bookingEntity";
 import {
 	bookingToDomain,
 	bookingToPersistence,

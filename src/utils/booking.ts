@@ -3,7 +3,10 @@ import type { Property } from "../domain/entities/property";
 import type { User } from "../domain/entities/user";
 import { BookingEntity } from "../infrastructure/persistence/entities/bookingEntity";
 import { createDateRange } from "./dateRange";
-import { createProperty, createPropertyPersistenceObject } from "./property";
+import {
+	createPropertyForTest,
+	createPropertyPersistenceObject,
+} from "./property";
 import { createUser, createUserPersistenceObject } from "./user";
 
 export const createBooking = (
@@ -16,7 +19,7 @@ export const createBooking = (
 		guestCount: number;
 	}>,
 ): Booking => {
-	const property = overrides?.property ?? createProperty();
+	const property = overrides?.property ?? createPropertyForTest();
 	const guest = overrides?.guest ?? createUser();
 	const dateRange = createDateRange({
 		daysFromNow: overrides?.daysFromNow,

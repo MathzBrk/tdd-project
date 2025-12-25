@@ -1,5 +1,5 @@
 import {
-	createProperty,
+	createPropertyForTest,
 	createPropertyPersistenceObject,
 } from "../../../utils/property";
 import type { PropertyEntity } from "../entities/propertyEntity";
@@ -8,7 +8,7 @@ import { propertyToDomain, propertyToPersistence } from "./propertyMapper";
 describe("PropertyMapper", () => {
 	describe("toPersistence", () => {
 		it("should map all property fields to persistence entity", () => {
-			const property = createProperty();
+			const property = createPropertyForTest();
 
 			const propertyEntity = propertyToPersistence(property);
 
