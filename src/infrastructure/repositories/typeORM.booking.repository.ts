@@ -2,13 +2,16 @@ import { Repository } from "typeorm";
 import { Booking } from "../../domain/entities/booking";
 import { BookingRepository } from "../../domain/repositories/bookingRepository";
 import { BookingEntity } from "../persistence/entities/bookingEntity";
-import { BookingMapper } from "../persistence/mappers/bookingMapper";
+import {
+	bookingToDomain,
+	bookingToPersistence,
+} from "../persistence/mappers/bookingMapper";
 
 export class TypeORMBookingRepository implements BookingRepository {
 	constructor(private ormRepository: Repository<BookingEntity>) {}
 
 	async save(booking: Booking): Promise<void> {
-		const bookingEntity = BookingMapper.toPersistence(booking);
+		const bookingEntity = bookingToPersistence(booking);
 		await this.ormRepository.save(bookingEntity);
 	}
 
@@ -20,6 +23,6 @@ export class TypeORMBookingRepository implements BookingRepository {
 		if (!bookingEntity) {
 			return null;
 		}
-		return BookingMapper.toDomain(bookingEntity);
+		return bookingToDomain(bookingEntity);
 	}
 }
