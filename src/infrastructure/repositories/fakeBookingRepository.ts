@@ -10,6 +10,15 @@ export class FakeBookingRepository implements BookingRepository {
 	}
 
 	async save(booking: Booking): Promise<void> {
-		this.bookings.push(booking);
+		const existingIndex = this.bookings.findIndex(
+			(b) => b.getId() === booking.getId(),
+		);
+		if (existingIndex >= 0) {
+			// Update existing booking (e.g., after cancellation)
+			this.bookings[existingIndex] = booking;
+		} else {
+			// Add new booking
+			this.bookings.push(booking);
+		}
 	}
 }
