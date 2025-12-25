@@ -16,6 +16,9 @@ export class Property {
 		if (maxGuests <= 0) {
 			throw new Error("Max guests must be greater than zero");
 		}
+		if (Number.isNaN(basePrice) || basePrice < 0) {
+			throw new Error("Invalid base price for property");
+		}
 	}
 
 	getId(): string {
