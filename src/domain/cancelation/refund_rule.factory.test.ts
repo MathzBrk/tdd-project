@@ -16,4 +16,13 @@ describe("RefundRuleFactory", () => {
 		const refundRule = createRefundRule(0);
 		expect(refundRule).toBeInstanceOf(NoRefund);
 	});
+
+	it("should return NoRefund for negative daysDiff", () => {
+		const refundRule = createRefundRule(-3);
+		expect(refundRule).toBeInstanceOf(NoRefund);
+	});
+
+	it("should throw an error for invalid daysDiff", () => {
+		expect(() => createRefundRule(NaN)).toThrow("Invalid days difference");
+	});
 });
