@@ -13,6 +13,7 @@ import { TypeORMPropertyRepository } from "../../infrastructure/repositories/typ
 import { TypeORMUserRepository } from "../../infrastructure/repositories/typeORM.user.repository";
 import { BookingController } from "../../infrastructure/web/bookingController";
 import { PropertyController } from "../../infrastructure/web/propertyController";
+import { UserController } from "../../infrastructure/web/userController";
 
 /**
  * Container interface that holds all test dependencies.
@@ -34,6 +35,7 @@ export interface TestContainer {
 	controllers: {
 		bookingController: BookingController;
 		propertyController: PropertyController;
+		userController: UserController;
 	};
 	cleanup(): Promise<void>;
 }
@@ -88,7 +90,7 @@ export async function createTestContainer(): Promise<TestContainer> {
 	// Step 4: Initialize controller layer
 	const bookingController = new BookingController(bookingService);
 	const propertyController = new PropertyController(propertyService);
-
+	const userController = new UserController(userService);
 	// Step 5: Return container with cleanup mechanism
 	return {
 		dataSource,
@@ -105,6 +107,7 @@ export async function createTestContainer(): Promise<TestContainer> {
 		controllers: {
 			bookingController,
 			propertyController,
+			userController,
 		},
 		cleanup: async () => {
 			await dataSource.destroy();

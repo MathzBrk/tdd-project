@@ -1,5 +1,5 @@
 import {
-	createBooking,
+	createBookingForTest,
 	createBookingPersistenceObject,
 } from "../../../utils/booking";
 import { createPropertyForTest } from "../../../utils/property";
@@ -8,7 +8,7 @@ import { bookingToDomain, bookingToPersistence } from "./bookingMapper";
 describe("BookingMapper", () => {
 	describe("toPersistence", () => {
 		it("should map all booking fields to persistence entity", () => {
-			const booking = createBooking();
+			const booking = createBookingForTest();
 
 			const bookingEntity = bookingToPersistence(booking);
 
@@ -40,7 +40,7 @@ describe("BookingMapper", () => {
 		});
 
 		it("should map booking with custom guest count", () => {
-			const booking = createBooking({ guestCount: 5 });
+			const booking = createBookingForTest({ guestCount: 5 });
 
 			const bookingEntity = bookingToPersistence(booking);
 
