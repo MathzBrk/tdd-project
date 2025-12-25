@@ -2,13 +2,16 @@ import { Repository } from "typeorm";
 import { Property } from "../../domain/entities/property";
 import { PropertyRepository } from "../../domain/repositories/propertyRepository";
 import { PropertyEntity } from "../persistence/entities/propertyEntity";
-import { PropertyMapper } from "../persistence/mappers/propertyMapper";
+import {
+	propertyToDomain,
+	propertyToPersistence,
+} from "../persistence/mappers/propertyMapper";
 
 export class TypeORMPropertyRepository implements PropertyRepository {
 	constructor(private readonly repository: Repository<PropertyEntity>) {}
 
 	async save(property: Property): Promise<void> {
-		const propertyEntity = PropertyMapper.toPersistence(property);
+		const propertyEntity = propertyToPersistence(property);
 		await this.repository.save(propertyEntity);
 	}
 
@@ -19,6 +22,6 @@ export class TypeORMPropertyRepository implements PropertyRepository {
 		if (!propertyEntity) {
 			return null;
 		}
-		return PropertyMapper.toDomain(propertyEntity);
+		return propertyToDomain(propertyEntity);
 	}
 }
