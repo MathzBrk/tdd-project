@@ -1,133 +1,41 @@
 import express from "express";
-import e from "express";
 import request from "supertest";
-import { DataSource } from "typeorm";
-import { BookingService } from "../../application/services/bookingService";
-import { PropertyService } from "../../application/services/propertyService";
-import { UserService } from "../../application/services/userService";
-import { BookingRepository } from "../../domain/repositories/bookingRepository";
-import { PropertyRepository } from "../../domain/repositories/propertyRepository";
-import { UserRepository } from "../../domain/repositories/userRepository";
-import { BookingEntity } from "../persistence/entities/bookingEntity";
-import { PropertyEntity } from "../persistence/entities/propertyEntity";
-import { UserEntity } from "../persistence/entities/userEntity";
-import { TypeORMBookingRepository } from "../repositories/typeORM.booking.repository";
-import { TypeORMPropertyRepository } from "../repositories/typeORM.property.repository";
-import { TypeORMUserRepository } from "../repositories/typeORM.user.repository";
-import { BookingController } from "./bookingController";
+import type { TestContainer } from "../../utils/tests/testContainer";
+import { createTestContainer } from "../../utils/tests/testContainer";
+import { seedBookingData, seedTestData } from "../../utils/tests/testSeeder";
 
 const app = express();
 app.use(express.json());
 
-let dataSource: DataSource;
-
-let bookingRepository: BookingRepository;
-let propertyRepository: PropertyRepository;
-let userRepository: UserRepository;
-let bookingService: BookingService;
-let propertyService: PropertyService;
-let userService: UserService;
-let bookingController: BookingController;
+let container: TestContainer;
 
 beforeAll(async () => {
-	dataSource = new DataSource({
-		type: "sqlite",
-		database: ":memory:",
-		entities: [BookingEntity, PropertyEntity, UserEntity],
-		synchronize: true,
-		logging: false,
-		dropSchema: true,
-	});
-	await dataSource.initialize();
-	bookingRepository = new TypeORMBookingRepository(
-		dataSource.getRepository(BookingEntity),
-	);
-	propertyRepository = new TypeORMPropertyRepository(
-		dataSource.getRepository(PropertyEntity),
-	);
-	userRepository = new TypeORMUserRepository(
-		dataSource.getRepository(UserEntity),
-	);
-	propertyService = new PropertyService(propertyRepository);
-	userService = new UserService(userRepository);
-	bookingService = new BookingService(
-		bookingRepository,
-		propertyService,
-		userService,
-	);
+	// Initialize complete test container with all dependencies
+	container = await createTestContainer();
 
-	bookingController = new BookingController(bookingService);
-
+	// Register routes with controller from container
 	app.post("/bookings", (req, res, next) => {
-		bookingController.createBooking(req, res, next).catch((err) => next(err));
+		container.controllers.bookingController
+			.createBooking(req, res, next)
+			.catch((err) => next(err));
 	});
 
 	app.post("/bookings/:id/cancel", (req, res, next) => {
-		bookingController.cancelBooking(req, res, next).catch((err) => next(err));
+		container.controllers.bookingController
+			.cancelBooking(req, res, next)
+			.catch((err) => next(err));
 	});
 }, 30000);
 
 afterAll(async () => {
-	await dataSource.destroy();
+	// Clean up database connection
+	await container.cleanup();
 });
-
-const specialCaseForCancelingABooking = async () => {
-	const propertyRepo = dataSource.getRepository(PropertyEntity);
-	const userRepo = dataSource.getRepository(UserEntity);
-	const bookingRepo = dataSource.getRepository(BookingEntity);
-
-	await bookingRepo.clear();
-	await propertyRepo.clear();
-	await userRepo.clear();
-
-	await propertyRepo.save({
-		id: "prop-1",
-		title: "Cozy Cottage",
-		description: "A cozy cottage in the countryside",
-		maxGuests: 6,
-		basePrice: 100,
-	});
-
-	await userRepo.save({
-		id: "user-1",
-		name: "John Doe",
-	});
-
-	await bookingRepo.save({
-		id: "booking-1",
-		property: { id: "prop-1" },
-		guest: { id: "user-1" },
-		startDate: new Date("2024-07-01"),
-		endDate: new Date("2024-07-10"),
-		guestCount: 2,
-		status: "confirmed",
-		totalPrice: 800,
-	});
-};
 
 describe("BookingController E2E", () => {
 	beforeEach(async () => {
-		// Seed initial data for properties and users
-		const propertyRepo = dataSource.getRepository(PropertyEntity);
-		const userRepo = dataSource.getRepository(UserEntity);
-		const bookingRepo = dataSource.getRepository(BookingEntity);
-
-		await bookingRepo.clear();
-		await propertyRepo.clear();
-		await userRepo.clear();
-
-		await propertyRepo.save({
-			id: "prop-1",
-			title: "Cozy Cottage",
-			description: "A cozy cottage in the countryside",
-			maxGuests: 6,
-			basePrice: 100,
-		});
-
-		await userRepo.save({
-			id: "user-1",
-			name: "John Doe",
-		});
+		// Seed basic test data for each test
+		await seedTestData(container.dataSource);
 	});
 
 	it("should create a booking successfully", async () => {
@@ -218,7 +126,8 @@ describe("BookingController E2E", () => {
 	});
 
 	it("should cancel a booking successfully", async () => {
-		await specialCaseForCancelingABooking();
+		// Seed data with an existing booking
+		await seedBookingData(container.dataSource);
 
 		const response = await request(app)
 			.post("/bookings/booking-1/cancel")

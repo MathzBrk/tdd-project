@@ -1,5 +1,5 @@
-import { Booking } from "../../domain/entities/booking";
-import { BookingRepository } from "../../domain/repositories/bookingRepository";
+import type { Booking } from "../../domain/entities/booking";
+import type { BookingRepository } from "../../domain/repositories/bookingRepository";
 
 export class FakeBookingRepository implements BookingRepository {
 	constructor(private bookings: Booking[] = []) {}

@@ -1,11 +1,11 @@
 import { v4 as uuidv4 } from "uuid";
 
 import { Booking } from "../../domain/entities/booking";
-import { BookingRepository } from "../../domain/repositories/bookingRepository";
+import type { BookingRepository } from "../../domain/repositories/bookingRepository";
 import { DateRange } from "../../domain/value_objects/date_range";
-import { CreateBookingDTO } from "../dtos/createBooking.dto";
-import { PropertyService } from "./propertyService";
-import { UserService } from "./userService";
+import type { CreateBookingDTO } from "../dtos/createBooking.dto";
+import type { PropertyService } from "./propertyService";
+import type { UserService } from "./userService";
 
 export class BookingService {
 	constructor(

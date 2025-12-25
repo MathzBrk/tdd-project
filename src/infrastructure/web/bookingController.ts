@@ -1,6 +1,6 @@
-import { NextFunction, Request, Response } from "express";
-import { CreateBookingDTO } from "../../application/dtos/createBooking.dto";
-import { BookingService } from "../../application/services/bookingService";
+import type { NextFunction, Request, Response } from "express";
+import type { CreateBookingDTO } from "../../application/dtos/createBooking.dto";
+import type { BookingService } from "../../application/services/bookingService";
 
 export class BookingController {
 	constructor(private bookingService: BookingService) {}

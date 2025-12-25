@@ -1,5 +1,5 @@
-import { Property } from "../../domain/entities/property";
 import { FakePropertyRepository } from "../../infrastructure/repositories/fakePropertyRepository";
+import type { CreatePropertyDTO } from "../dtos/createProperty.dto";
 import { PropertyService } from "./propertyService";
 
 describe("Property Service", () => {
@@ -23,19 +23,20 @@ describe("Property Service", () => {
 	});
 
 	it("it should save a new property and retrieve it by ID", async () => {
-		const property = new Property(
-			"2",
-			"Cozy Apartment",
-			"A cozy apartment near the park",
-			4,
-			200,
+		const propertyDTO: CreatePropertyDTO = {
+			title: "Cozy Apartment",
+			description: "A cozy apartment near the park",
+			pricePerNight: 200,
+			maxGuests: 4,
+		};
+
+		const newProperty = await propertyService.saveProperty(propertyDTO);
+
+		const retrievedProperty = await propertyService.findPropertyById(
+			newProperty.getId(),
 		);
-
-		await fakePropertyRepository.save(property);
-
-		const retrievedProperty = await propertyService.findPropertyById("2");
 		expect(retrievedProperty).not.toBeNull();
-		expect(retrievedProperty?.getId()).toBe("2");
+		expect(retrievedProperty?.getId()).toBe(newProperty.getId());
 		expect(retrievedProperty?.getTitle()).toBe("Cozy Apartment");
 	});
 });

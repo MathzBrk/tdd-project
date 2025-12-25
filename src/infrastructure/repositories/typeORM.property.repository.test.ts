@@ -1,4 +1,4 @@
-import { DataSource, Repository } from "typeorm";
+import { DataSource, type Repository } from "typeorm";
 import { Property } from "../../domain/entities/property";
 import { BookingEntity } from "../persistence/entities/bookingEntity";
 import { PropertyEntity } from "../persistence/entities/propertyEntity";

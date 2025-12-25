@@ -1,7 +1,7 @@
-import { Repository } from "typeorm";
-import { Property } from "../../domain/entities/property";
-import { PropertyRepository } from "../../domain/repositories/propertyRepository";
-import { PropertyEntity } from "../persistence/entities/propertyEntity";
+import type { Repository } from "typeorm";
+import type { Property } from "../../domain/entities/property";
+import type { PropertyRepository } from "../../domain/repositories/propertyRepository";
+import type { PropertyEntity } from "../persistence/entities/propertyEntity";
 import {
 	propertyToDomain,
 	propertyToPersistence,

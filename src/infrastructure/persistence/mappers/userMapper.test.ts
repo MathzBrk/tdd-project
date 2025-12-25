@@ -1,10 +1,13 @@
-import { createUser, createUserPersistenceObject } from "../../../utils/user";
+import {
+	createUserForTest,
+	createUserPersistenceObject,
+} from "../../../utils/user";
 import { userToDomain, userToPersistence } from "./userMapper";
 
 describe("UserMapper", () => {
 	describe("toPersistence", () => {
 		it("should map all user fields to persistence entity", () => {
-			const user = createUser();
+			const user = createUserForTest();
 
 			const userEntity = userToPersistence(user);
 
