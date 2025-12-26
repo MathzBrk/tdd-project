@@ -2,7 +2,7 @@
 
 A property booking system built with **Test-Driven Development (TDD)** practices, implementing Clean Architecture patterns with TypeScript, Express, and TypeORM.
 
-## 📚 Project Background
+## Project Background
 
 This project was developed as part of the **Full Cycle** course's TDD module. The base implementation includes domain entities, repositories, and basic CRUD operations. I completed the technical challenge and added significant refactoring improvements to demonstrate professional software engineering practices.
 
@@ -11,7 +11,7 @@ Original course repository: [https://github.com/devfullcycle/fc4-tdd](https://gi
 
 ---
 
-## 🎯 Technical Challenge - Requirements ✅
+## Technical Challenge - Requirements ✅
 
 The course's final technical challenge required implementing the following tests and features using TDD:
 
@@ -48,7 +48,7 @@ The course's final technical challenge required implementing the following tests
 
 ---
 
-## 🚀 My Contributions & Improvements
+## My Contributions & Improvements
 
 Beyond the course material and technical challenge, I made the following professional refactoring improvements:
 
@@ -104,7 +104,7 @@ src/
 
 ---
 
-## 🧪 Testing Strategy
+## Testing Strategy
 
 This project demonstrates a comprehensive testing approach with **87 tests** across three levels:
 
@@ -137,7 +137,7 @@ This project demonstrates a comprehensive testing approach with **87 tests** acr
 
 ---
 
-## 🛠️ Tech Stack
+## Tech Stack
 
 - **Language:** TypeScript
 - **Framework:** Express.js
@@ -148,7 +148,7 @@ This project demonstrates a comprehensive testing approach with **87 tests** acr
 
 ---
 
-## 📦 Installation & Setup
+## Installation & Setup
 
 ### Prerequisites
 - Node.js >= 18.x
@@ -206,7 +206,7 @@ npm test -- --watch
 
 ---
 
-## 📊 Test Results
+## Test Results
 
 ```
 Test Suites: 18 passed, 18 total
@@ -224,7 +224,7 @@ Time:        2.418s
 
 ---
 
-## 🔄 Recent Improvements (Changelog)
+## Recent Improvements (Changelog)
 
 ### Testing Improvements
 - Refactored service layer tests to use proper mocking with real domain objects
@@ -245,14 +245,14 @@ Time:        2.418s
 
 ---
 
-## 🙏 Acknowledgments
+## Acknowledgments
 
 - **Full Cycle** course for the TDD module and technical challenge
 - Course repository: [https://github.com/devfullcycle/fc4-tdd](https://github.com/devfullcycle/fc4-tdd)
 
 ---
 
-## 📧 Contact
+## Contact
 
 Feel free to reach out if you have questions about the implementation or testing strategies used in this project.
 
